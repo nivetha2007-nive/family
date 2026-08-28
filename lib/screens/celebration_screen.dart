@@ -362,7 +362,7 @@ class _CelebrationScreenState extends State<CelebrationScreen>
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(13),
                                     child: Image.asset(
-                                      'assets/images/parents/celebration_photo.jpg',
+                                      'images/parents/celebration_photo.jpg',
                                       fit: BoxFit.cover,
                                       errorBuilder: (context, error, stackTrace) {
                                         // Fallback if photo not found
