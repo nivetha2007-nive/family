@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 import '../theme/app_colors.dart';
-import '../theme/app_text_styles.dart';
+import '../theme/app_typography.dart';
 import '../constants/app_constants.dart';
 import '../constants/animation_config.dart';
 import '../widgets/decorative_divider.dart';
@@ -201,9 +201,9 @@ class _CelebrationScreenState extends State<CelebrationScreen>
                                 scale: _pulseAnimation,
                                 child: Text(
                                   _numberAnimation.value.toInt().toString(),
-                                  style: AppTextStyles.displayLarge.copyWith(
-                                    fontSize: 120,
-                                    fontWeight: FontWeight.w300,
+                                  style: AppTypography.mainTitle.copyWith(
+                                    fontSize: size.width < 360 ? 100 : 120,
+                                    fontWeight: FontWeight.w400,
                                     color: AppColors.primaryBurgundy,
                                     height: 1,
                                   ),
@@ -221,8 +221,8 @@ class _CelebrationScreenState extends State<CelebrationScreen>
                         opacity: _fadeAnimation,
                         child: Text(
                           'Years of Love',
-                          style: AppTextStyles.elegant.copyWith(
-                            fontSize: 38,
+                          style: AppTypography.sectionTitle.copyWith(
+                            fontSize: size.width < 360 ? 32 : 38,
                             color: AppColors.darkText,
                           ),
                         ),
@@ -280,9 +280,9 @@ class _CelebrationScreenState extends State<CelebrationScreen>
                             children: [
                               Text(
                                 'Happy Anniversary',
-                                style: AppTextStyles.heading1.copyWith(
+                                style: AppTypography.timelineTitle.copyWith(
                                   color: AppColors.primaryBurgundy,
-                                  fontSize: 28,
+                                  fontSize: size.width < 360 ? 24 : 28,
                                 ),
                                 textAlign: TextAlign.center,
                               ),
@@ -291,8 +291,8 @@ class _CelebrationScreenState extends State<CelebrationScreen>
                               
                               Text(
                                 '${AppConstants.groomName} & ${AppConstants.brideName}',
-                                style: AppTextStyles.elegantMedium.copyWith(
-                                  fontSize: 22,
+                                style: AppTypography.coupleNames.copyWith(
+                                  fontSize: size.width < 360 ? 18 : 22,
                                   color: AppColors.deepRed,
                                 ),
                                 textAlign: TextAlign.center,
@@ -309,8 +309,8 @@ class _CelebrationScreenState extends State<CelebrationScreen>
                               
                               Text(
                                 '20 years.',
-                                style: AppTextStyles.bodyLarge.copyWith(
-                                  fontSize: 18,
+                                style: AppTypography.bodyMedium.copyWith(
+                                  fontSize: size.width < 360 ? 16 : 18,
                                   height: 1.8,
                                   color: AppColors.darkText,
                                 ),
@@ -319,8 +319,8 @@ class _CelebrationScreenState extends State<CelebrationScreen>
                               
                               Text(
                                 'Thousands of memories.',
-                                style: AppTextStyles.bodyLarge.copyWith(
-                                  fontSize: 18,
+                                style: AppTypography.bodyMedium.copyWith(
+                                  fontSize: size.width < 360 ? 16 : 18,
                                   height: 1.8,
                                   color: AppColors.darkText,
                                 ),
@@ -329,8 +329,8 @@ class _CelebrationScreenState extends State<CelebrationScreen>
                               
                               Text(
                                 'One beautiful journey.',
-                                style: AppTextStyles.bodyLarge.copyWith(
-                                  fontSize: 18,
+                                style: AppTypography.bodyMedium.copyWith(
+                                  fontSize: size.width < 360 ? 16 : 18,
                                   height: 1.8,
                                   color: AppColors.darkText,
                                 ),
@@ -380,7 +380,7 @@ class _CelebrationScreenState extends State<CelebrationScreen>
                                                 const SizedBox(height: 12),
                                                 Text(
                                                   'Add celebration_photo.jpg to\nassets/images/parents/',
-                                                  style: AppTextStyles.caption.copyWith(
+                                                  style: AppTypography.caption.copyWith(
                                                     color: AppColors.mediumText,
                                                     fontStyle: FontStyle.italic,
                                                   ),
@@ -426,7 +426,7 @@ class _CelebrationScreenState extends State<CelebrationScreen>
                             children: [
                               Text(
                                 'One More Message',
-                                style: AppTextStyles.button.copyWith(
+                                style: AppTypography.button.copyWith(
                                   color: AppColors.white,
                                   letterSpacing: 1.2,
                                 ),

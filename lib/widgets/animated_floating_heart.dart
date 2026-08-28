@@ -37,7 +37,6 @@ class _AnimatedFloatingHeartState extends State<AnimatedFloatingHeart>
     super.initState();
     _initializeProperties();
     _setupAnimation();
-    print('❤️ Heart created: size=$_size, opacity=$_maxOpacity, style=$_style');
   }
   
   void _initializeProperties() {

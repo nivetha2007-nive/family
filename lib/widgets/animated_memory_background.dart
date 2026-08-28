@@ -23,8 +23,6 @@ class AnimatedMemoryBackground extends StatelessWidget {
     final heartCount = (AnimationConfig.heartCount * intensityValue).round();
     final particleCount = (AnimationConfig.particleCount * intensityValue).round();
     
-    print('🎨 Animation Debug: intensity=$intensity, hearts=$heartCount, particles=$particleCount');
-    
     return Stack(
       children: [
         // Content layer FIRST (bottom)
@@ -92,29 +90,10 @@ class _AnimationLayerState extends State<_AnimationLayer>
       return const SizedBox.shrink();
     }
     
-    print('✨ AnimationLayer rendering: ${widget.heartCount} hearts, ${widget.particleCount} particles');
-    
     return Container(
-      color: Colors.transparent, // Ensure container is present
+      color: Colors.transparent,
       child: Stack(
         children: [
-          // Debug indicator (remove this after confirming animations work)
-          Positioned(
-            top: 100,
-            right: 20,
-            child: Container(
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                color: Colors.red.withOpacity(0.8),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Text(
-                '❤️ ${widget.heartCount} hearts',
-                style: const TextStyle(color: Colors.white, fontSize: 12),
-              ),
-            ),
-          ),
-          
           // Floating hearts
           ...List.generate(
             widget.heartCount,

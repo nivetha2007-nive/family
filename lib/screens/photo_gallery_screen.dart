@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import '../theme/app_colors.dart';
-import '../theme/app_text_styles.dart';
+import '../theme/app_typography.dart';
 import '../theme/app_theme.dart';
 import '../constants/animation_config.dart';
 import '../models/photo_memory.dart';
 import '../widgets/memory_app_wrapper.dart';
+import '../widgets/anniversary_app_bar.dart';
 import 'photo_viewer_screen.dart';
 
 /// Photo memories gallery with categories
@@ -102,78 +103,51 @@ class _PhotoGalleryScreenState extends State<PhotoGalleryScreen>
       intensity: AnimationIntensity.subtle,
       quotePosition: QuotePosition.topCenter,
       child: Scaffold(
-      backgroundColor: AppColors.creamBackground,
-      body: NestedScrollView(
-        headerSliverBuilder: (context, innerBoxIsScrolled) {
-          return [
-            SliverAppBar(
-              expandedHeight: 140,
-              floating: false,
-              pinned: true,
-              backgroundColor: AppColors.primaryBurgundy,
-              flexibleSpace: FlexibleSpaceBar(
-                centerTitle: true,
-                title: Text(
-                  'Photo Memories',
-                  style: AppTextStyles.heading2.copyWith(
-                    color: AppColors.whiteText,
-                    fontSize: 22,
-                  ),
+        backgroundColor: AppColors.creamBackground,
+        body: SafeArea(
+          child: NestedScrollView(
+            headerSliverBuilder: (context, innerBoxIsScrolled) {
+              return [
+                AnniversaryAppBar(
+                  title: 'Photo Memories',
+                  subtitle: 'Cherished Moments',
+                  icon: Icons.photo_library,
                 ),
-                background: Container(
-                  decoration: const BoxDecoration(
-                    gradient: AppColors.primaryGradient,
-                  ),
-                  child: Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const SizedBox(height: 30),
-                        Icon(
-                          Icons.photo_library,
-                          size: 42,
-                          color: AppColors.whiteText.withOpacity(0.9),
-                        ),
-                      ],
+                SliverPersistentHeader(
+                  pinned: true,
+                  delegate: _SliverTabBarDelegate(
+                    TabBar(
+                      controller: _tabController,
+                      isScrollable: true,
+                      indicatorColor: AppColors.gold,
+                      indicatorWeight: 3,
+                      labelColor: AppColors.primaryBurgundy,
+                      unselectedLabelColor: AppColors.mediumText,
+                      labelStyle: AppTypography.label.copyWith(
+                        fontWeight: FontWeight.w400,
+                        fontSize: 14,
+                      ),
+                      unselectedLabelStyle: AppTypography.label.copyWith(
+                        fontWeight: FontWeight.w400,
+                        fontSize: 13,
+                      ),
+                      tabs: PhotoCategory.values.map((category) {
+                        return Tab(text: category.displayName);
+                      }).toList(),
                     ),
                   ),
                 ),
-              ),
+              ];
+            },
+            body: TabBarView(
+              controller: _tabController,
+              children: PhotoCategory.values.map((category) {
+                return _buildPhotoGrid(category);
+              }).toList(),
             ),
-            SliverPersistentHeader(
-              pinned: true,
-              delegate: _SliverTabBarDelegate(
-                TabBar(
-                  controller: _tabController,
-                  isScrollable: true,
-                  indicatorColor: AppColors.gold,
-                  indicatorWeight: 3,
-                  labelColor: AppColors.primaryBurgundy,
-                  unselectedLabelColor: AppColors.mediumText,
-                  labelStyle: AppTextStyles.label.copyWith(
-                    fontWeight: FontWeight.w700,
-                    fontSize: 13,
-                  ),
-                  unselectedLabelStyle: AppTextStyles.label.copyWith(
-                    fontWeight: FontWeight.w400,
-                    fontSize: 13,
-                  ),
-                  tabs: PhotoCategory.values.map((category) {
-                    return Tab(text: category.displayName);
-                  }).toList(),
-                ),
-              ),
-            ),
-          ];
-        },
-        body: TabBarView(
-          controller: _tabController,
-          children: PhotoCategory.values.map((category) {
-            return _buildPhotoGrid(category);
-          }).toList(),
+          ),
         ),
       ),
-        ),
     );
   }
 
@@ -193,14 +167,14 @@ class _PhotoGalleryScreenState extends State<PhotoGalleryScreen>
             const SizedBox(height: 16),
             Text(
               'No photos yet',
-              style: AppTextStyles.bodyLarge.copyWith(
+              style: AppTypography.bodyLarge.copyWith(
                 color: AppColors.mediumText,
               ),
             ),
             const SizedBox(height: 8),
             Text(
               'Add your ${category.displayName.toLowerCase()} photos here',
-              style: AppTextStyles.bodySmall.copyWith(
+              style: AppTypography.bodySmall.copyWith(
                 color: AppColors.lightText,
                 fontStyle: FontStyle.italic,
               ),
@@ -277,7 +251,7 @@ class _PhotoGalleryScreenState extends State<PhotoGalleryScreen>
                               padding: const EdgeInsets.symmetric(horizontal: 12),
                               child: Text(
                                 'Add photo',
-                                style: AppTextStyles.caption.copyWith(
+                                style: AppTypography.caption.copyWith(
                                   color: AppColors.mediumText.withOpacity(0.5),
                                 ),
                                 textAlign: TextAlign.center,
@@ -326,7 +300,7 @@ class _PhotoGalleryScreenState extends State<PhotoGalleryScreen>
                     children: [
                       Text(
                         photo.caption!,
-                        style: AppTextStyles.caption.copyWith(
+                        style: AppTypography.caption.copyWith(
                           color: AppColors.darkText,
                           fontSize: 11,
                           height: 1.3,
@@ -338,7 +312,7 @@ class _PhotoGalleryScreenState extends State<PhotoGalleryScreen>
                         const SizedBox(height: 4),
                         Text(
                           photo.date!,
-                          style: AppTextStyles.caption.copyWith(
+                          style: AppTypography.caption.copyWith(
                             color: AppColors.lightText,
                             fontSize: 10,
                           ),

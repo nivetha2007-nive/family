@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import '../theme/app_colors.dart';
-import '../theme/app_text_styles.dart';
+import '../theme/app_typography.dart';
 import '../constants/app_constants.dart';
 import '../constants/animation_config.dart';
 import '../widgets/decorative_divider.dart';
 import '../widgets/memory_app_wrapper.dart';
+import '../widgets/anniversary_app_bar.dart';
 
 /// Personal letter screen - A heartfelt letter to parents
 /// This screen is designed to feel like opening a handwritten letter
@@ -99,76 +100,49 @@ ${AppConstants.child1Name} & ${AppConstants.child2Name}
       quotePosition: QuotePosition.topCenter,
       showQuotes: false, // Disable quotes on letter screen for readability
       child: Scaffold(
-      backgroundColor: AppColors.creamBackground,
-      body: CustomScrollView(
-        controller: _scrollController,
-        slivers: [
-          // App bar
-          SliverAppBar(
-            expandedHeight: 140,
-            floating: false,
-            pinned: true,
-            backgroundColor: AppColors.primaryBurgundy,
-            flexibleSpace: FlexibleSpaceBar(
-              centerTitle: true,
-              title: Text(
-                'A Letter of Love',
-                style: AppTextStyles.heading2.copyWith(
-                  color: AppColors.whiteText,
-                  fontSize: 22,
-                ),
+        backgroundColor: AppColors.creamBackground,
+        body: SafeArea(
+          child: CustomScrollView(
+            controller: _scrollController,
+            slivers: [
+              // App bar with back button
+              AnniversaryAppBar(
+                title: 'A Letter of Love',
+                subtitle: 'From the Heart',
+                icon: Icons.mail_outline,
               ),
-              background: Container(
-                decoration: const BoxDecoration(
-                  gradient: AppColors.primaryGradient,
-                ),
-                child: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const SizedBox(height: 30),
-                      Icon(
-                        Icons.mail_outline,
-                        size: 42,
-                        color: AppColors.whiteText.withOpacity(0.9),
+
+              // Letter content
+              SliverToBoxAdapter(
+                child: FadeTransition(
+                  opacity: _fadeAnimation,
+                  child: SlideTransition(
+                    position: _slideAnimation,
+                    child: Padding(
+                      padding: const EdgeInsets.all(24),
+                      child: Column(
+                        children: [
+                          const SizedBox(height: 16),
+
+                          // Letter envelope decoration
+                          _buildLetterEnvelope(),
+
+                          const SizedBox(height: 32),
+
+                          // Main letter card
+                          _buildLetterCard(),
+
+                          const SizedBox(height: 100),
+                        ],
                       ),
-                    ],
+                    ),
                   ),
                 ),
               ),
-            ),
+            ],
           ),
-
-          // Letter content
-          SliverToBoxAdapter(
-            child: FadeTransition(
-              opacity: _fadeAnimation,
-              child: SlideTransition(
-                position: _slideAnimation,
-                child: Padding(
-                  padding: const EdgeInsets.all(24),
-                  child: Column(
-                    children: [
-                      const SizedBox(height: 16),
-
-                      // Letter envelope decoration
-                      _buildLetterEnvelope(),
-
-                      const SizedBox(height: 32),
-
-                      // Main letter card
-                      _buildLetterCard(),
-
-                      const SizedBox(height: 100),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
         ),
+      ),
     );
   }
 
@@ -203,15 +177,14 @@ ${AppConstants.child1Name} & ${AppConstants.child2Name}
           const SizedBox(height: 12),
           Text(
             'To Our Beloved Parents',
-            style: AppTextStyles.heading3.copyWith(
+            style: AppTypography.timelineTitle.copyWith(
               color: AppColors.primaryBurgundy,
-              fontStyle: FontStyle.italic,
             ),
           ),
           const SizedBox(height: 8),
           Text(
             'On Your 20th Wedding Anniversary',
-            style: AppTextStyles.bodyMedium.copyWith(
+            style: AppTypography.bodyMedium.copyWith(
               color: AppColors.mediumText,
             ),
           ),
@@ -282,9 +255,9 @@ ${AppConstants.child1Name} & ${AppConstants.child2Name}
                     const SizedBox(width: 6),
                     Text(
                       'With Love',
-                      style: AppTextStyles.caption.copyWith(
+                      style: AppTypography.caption.copyWith(
                         color: AppColors.deepRed,
-                        fontWeight: FontWeight.w600,
+                        fontWeight: FontWeight.w400,
                       ),
                     ),
                   ],
@@ -298,12 +271,7 @@ ${AppConstants.child1Name} & ${AppConstants.child2Name}
           // Letter content
           SelectableText(
             _letterContent,
-            style: AppTextStyles.bodyLarge.copyWith(
-              height: 1.8,
-              color: AppColors.darkText,
-              fontSize: 16,
-              letterSpacing: 0.3,
-            ),
+            style: AppTypography.letterBody,
           ),
 
           const SizedBox(height: 32),
