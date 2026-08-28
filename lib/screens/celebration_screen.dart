@@ -290,7 +290,7 @@ class _CelebrationScreenState extends State<CelebrationScreen>
                               const SizedBox(height: 20),
                               
                               Text(
-                                '${AppConstants.groomName} & ${AppConstants.brideName}',
+                                'Amma & Daddy',
                                 style: AppTypography.coupleNames.copyWith(
                                   fontSize: size.width < 360 ? 18 : 22,
                                   color: AppColors.deepRed,

@@ -149,24 +149,14 @@ class _StoryScreenState extends State<StoryScreen>
                           ],
                         ),
                       ),
-                      child: Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const SizedBox(height: 30),
-                            Icon(
-                              Icons.favorite,
-                              size: 40,
-                              color: AppColors.whiteText.withOpacity(0.9),
-                            ),
-                            const SizedBox(height: 8),
-                            Text(
-                              'A Journey of Love',
-                              style: AppTypography.bodySmall.copyWith(
-                                color: AppColors.whiteText.withOpacity(0.9),
-                              ),
-                            ),
-                          ],
+                      child: Padding(
+                        padding: const EdgeInsets.only(bottom: 50),
+                        child: Center(
+                          child: Icon(
+                            Icons.favorite,
+                            size: 40,
+                            color: AppColors.whiteText.withOpacity(0.9),
+                          ),
                         ),
                       ),
                     ),
