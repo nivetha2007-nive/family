@@ -1,49 +1,129 @@
-# Videos Folder
+# 🎥 Anniversary Invitation Video Guide
 
-## How to Add Your Videos
+## 📍 Video Location
 
-Replace the placeholder content with your actual anniversary videos.
+Place your Canva-created invitation video here:
 
-### Video Organization:
+```
+assets/videos/anniversary_invitation.mp4
+```
 
-1. **Wedding Videos**: `wedding_ceremony.mp4`, `wedding_reception.mp4`
-2. **Family Videos**: `family_moments.mp4`
-3. **Vacation Videos**: `vacation_memories.mp4`
-4. **Celebration Videos**: `celebrations.mp4`
-5. **Everyday Life**: `everyday_life.mp4`
-6. **Anniversary Message**: `anniversary_message.mp4`
+## ✨ What This Video Does
 
-### Video Guidelines:
+This is the **OPENING EXPERIENCE** of your anniversary app!
 
-- **Format**: MP4 (H.264 codec) recommended
-- **Resolution**: 1920x1080 (Full HD) or 1280x720 (HD)
-- **Duration**: Keep videos under 10 minutes for optimal performance
-- **File size**: Compress videos to under 50MB if possible
+When users tap **"Begin Our Story"** on the home screen, they will see your beautiful Canva-designed invitation video play in **full-screen**.
 
-### Thumbnails:
+## 🎬 Video Requirements
 
-Create a `thumbnails/` subfolder and add thumbnail images for each video:
-- `thumbnails/wedding_ceremony.jpg`
-- `thumbnails/wedding_reception.jpg`
-- etc.
+### Format
+- **File Format:** MP4 (recommended)
+- **File Name:** `anniversary_invitation.mp4` (exactly this name!)
 
-## Video Player Integration:
+### Quality
+- **Resolution:** 1080p or higher recommended
+- **Aspect Ratio:** Any (9:16 portrait, 16:9 landscape, 1:1 square - all work!)
+- **Duration:** Any length (typically 10-30 seconds for invitations)
+- **File Size:** Keep under 50MB for smooth performance
 
-The app currently has placeholder video player functionality. To add actual video playback:
+### Export from Canva
+1. Open your Canva design
+2. Click **"Share"** → **"Download"**
+3. Select **"MP4 Video"**
+4. Choose highest quality available
+5. Download the file
+6. Rename to: `anniversary_invitation.mp4`
+7. Place in this folder: `assets/videos/`
 
-1. Add `video_player` package to `pubspec.yaml`:
-   ```yaml
-   dependencies:
-     video_player: ^2.8.0
-   ```
+## 🎯 What the App Does
 
-2. Update `video_player_screen.dart` to initialize and use the video player
+### User Experience Flow:
+```
+Home Screen
+    ↓
+Tap "Begin Our Story"
+    ↓
+FULL-SCREEN VIDEO INVITATION
+(Your Canva design plays automatically)
+    ↓
+Video finishes
+    ↓
+"Continue Their Story →" button appears
+    ↓
+User continues to the main app
+```
 
-3. Run `flutter pub get` to install the package
+### Technical Features:
+✅ **Full-screen playback** - No cropping, no stretching  
+✅ **Aspect ratio preserved** - Shows exactly as designed  
+✅ **Black background** - Elegant letterboxing if needed  
+✅ **Auto-play** - Starts immediately when screen opens  
+✅ **NO floating hearts** - Pure Canva design, no overlays  
+✅ **Back button** - Top-left corner to return  
+✅ **Continue button** - Appears after video finishes  
+✅ **Loading indicator** - Shows while video loads  
+✅ **Error handling** - Clear message if video missing  
 
-## Tips:
+## 🎨 Design Tips
 
-- Use video editing software to trim and enhance videos before adding
-- Add background music or voiceovers for emotional impact
-- Keep videos short and meaningful
-- Test video playback on your target device
+### For Best Results:
+- Export in highest quality from Canva
+- Use engaging animations
+- Keep text readable on mobile screens
+- Include your couple names and date
+- Add elegant transitions
+- Consider background music (embedded in video)
+
+### Recommended Duration:
+- **10-15 seconds:** Quick, elegant reveal
+- **20-30 seconds:** Full invitation experience
+- **30-60 seconds:** Detailed story introduction
+
+## 📱 Supported Orientations
+
+The video player automatically adapts to:
+- **Portrait** (9:16) - Perfect for phones
+- **Landscape** (16:9) - Perfect for tablets
+- **Square** (1:1) - Works on all devices
+
+The app will show your video centered with black bars if needed - just like professional cinema!
+
+## 🚨 Troubleshooting
+
+### Video Not Playing?
+1. Check filename is exactly: `anniversary_invitation.mp4`
+2. Check file is in: `assets/videos/` folder
+3. Run `flutter pub get` after adding the video
+4. Hot restart the app (not just hot reload)
+5. Try re-exporting from Canva in MP4 format
+
+### Video Quality Issues?
+- Export from Canva at highest quality
+- Reduce file size if needed (compress online)
+- Check video plays normally outside the app first
+
+### Video Too Large?
+- Compress using online tools (e.g., handbrake.fr)
+- Target 20-30MB for mobile apps
+- Reduce resolution to 720p if needed
+
+## 📂 Example File Structure
+
+```
+assets/
+└── videos/
+    ├── anniversary_invitation.mp4   ← Your Canva video HERE
+    └── README.md                     ← This file
+```
+
+## 🎊 That's It!
+
+Once you add your video:
+1. The app will automatically detect it
+2. Users can tap "Begin Our Story"
+3. Your beautiful Canva invitation plays full-screen
+4. Perfect opening experience for your anniversary app!
+
+---
+
+**Remember:** The Canva invitation is the SOURCE OF TRUTH. The app simply displays it beautifully - no modifications, no recreations, just your pure design! ✨

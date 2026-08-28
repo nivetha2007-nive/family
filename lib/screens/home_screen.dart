@@ -9,6 +9,7 @@ import 'photo_gallery_screen.dart';
 import 'video_memories_screen.dart';
 import 'letter_screen.dart';
 import 'celebration_screen.dart';
+import 'video_invitation_screen.dart';
 
 /// Premium Home Screen - Main Hub
 /// Features: Responsive card-based navigation, elegant design, mobile-optimized
@@ -272,6 +273,56 @@ class _HomeScreenState extends State<HomeScreen>
                 color: AppColors.mediumText,
               ),
               textAlign: TextAlign.center,
+            ),
+          ),
+
+          const SizedBox(height: 32),
+
+          // "Begin Our Story" button - Opens video invitation
+          FadeTransition(
+            opacity: _cardAnimations[0],
+            child: ScaleTransition(
+              scale: Tween<double>(begin: 0.9, end: 1.0).animate(
+                CurvedAnimation(
+                  parent: _controller,
+                  curve: const Interval(0.2, 0.6, curve: Curves.easeOut),
+                ),
+              ),
+              child: ElevatedButton(
+                onPressed: () => _navigateToScreen(const VideoInvitationScreen()),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.primaryBurgundy,
+                  foregroundColor: AppColors.whiteText,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 36,
+                    vertical: 18,
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  elevation: 8,
+                  shadowColor: AppColors.primaryBurgundy.withOpacity(0.5),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Icon(
+                      Icons.play_circle_outline,
+                      size: 24,
+                    ),
+                    const SizedBox(width: 12),
+                    Text(
+                      'Begin Our Story',
+                      style: AppTypography.button.copyWith(
+                        color: AppColors.whiteText,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        letterSpacing: 0.5,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ),
           ),
         ],
