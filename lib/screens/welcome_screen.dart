@@ -6,10 +6,11 @@ import '../constants/app_constants.dart';
 import '../constants/animation_config.dart';
 import '../widgets/decorative_divider.dart';
 import '../widgets/memory_app_wrapper.dart';
-import 'invitation_screen.dart';
+import 'video_invitation_screen.dart';
 
 /// Opening screen - First impression of the anniversary app
 /// "20 Years of Love ❤️" with elegant animations
+/// Navigates directly to Canva video (NO Flutter invitation page)
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({super.key});
 
@@ -85,22 +86,14 @@ class _WelcomeScreenState extends State<WelcomeScreen>
     Navigator.of(context).pushReplacement(
       PageRouteBuilder(
         pageBuilder: (context, animation, secondaryAnimation) =>
-            const InvitationScreen(),
+            const VideoInvitationScreen(),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
-          const begin = Offset(1.0, 0.0);
-          const end = Offset.zero;
-          const curve = Curves.easeInOut;
-          
-          var tween = Tween(begin: begin, end: end).chain(
-            CurveTween(curve: curve),
-          );
-          
-          return SlideTransition(
-            position: animation.drive(tween),
+          return FadeTransition(
+            opacity: animation,
             child: child,
           );
         },
-        transitionDuration: const Duration(milliseconds: 800),
+        transitionDuration: const Duration(milliseconds: 600),
       ),
     );
   }
