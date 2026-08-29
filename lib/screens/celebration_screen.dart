@@ -117,6 +117,135 @@ class _CelebrationScreenState extends State<CelebrationScreen>
     );
   }
 
+  // List of all family photos
+  final List<Map<String, String>> _photos = [
+    {
+      'path': 'assets/images/parents/celebration_photo.jpg',
+      'caption': 'Celebration'
+    },
+    {
+      'path': 'assets/images/parents/family_together.jpg',
+      'caption': 'Family Together'
+    },
+    {
+      'path': 'assets/images/parents/family_daughters.jpg',
+      'caption': 'With Daughters'
+    },
+    {
+      'path': 'assets/images/parents/mom_portrait.jpg',
+      'caption': 'Amma'
+    },
+    {
+      'path': 'assets/images/parents/dad_portrail.jpg',
+      'caption': 'Daddy'
+    },
+    {
+      'path': 'assets/images/parents/family_home.jpg',
+      'caption': 'Our Home'
+    },
+    {
+      'path': 'assets/images/parents/beach_memory.jpg',
+      'caption': 'Beach Memories'
+    },
+  ];
+
+  Widget _buildPhotoGrid() {
+    return GridView.count(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      crossAxisCount: 2,
+      crossAxisSpacing: 12,
+      mainAxisSpacing: 12,
+      childAspectRatio: 1.2,
+      children: _photos.map((photo) => _buildPhotoCard(photo)).toList(),
+    );
+  }
+
+  Widget _buildPhotoCard(Map<String, String> photo) {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: AppColors.gold.withOpacity(0.3),
+          width: 2,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.softShadow,
+            blurRadius: 8,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(10),
+        child: Stack(
+          fit: StackFit.expand,
+          children: [
+            Image.asset(
+              photo['path']!,
+              fit: BoxFit.cover,
+              errorBuilder: (context, error, stackTrace) {
+                return Container(
+                  color: AppColors.warmBeige,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.photo,
+                        size: 24,
+                        color: AppColors.mediumText.withOpacity(0.5),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        photo['caption']!,
+                        style: AppTypography.caption.copyWith(
+                          fontSize: 10,
+                          color: AppColors.mediumText,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
+            // Gradient overlay for caption
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: Container(
+                padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 8),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Colors.transparent,
+                      Colors.black.withOpacity(0.7),
+                    ],
+                  ),
+                ),
+                child: Text(
+                  photo['caption']!,
+                  style: AppTypography.caption.copyWith(
+                    fontSize: 11,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w500,
+                  ),
+                  textAlign: TextAlign.center,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -339,62 +468,20 @@ class _CelebrationScreenState extends State<CelebrationScreen>
                               
                               const SizedBox(height: 24),
                               
-                              // Anniversary photo
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(16),
-                                child: Container(
-                                  height: 300,
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                      color: AppColors.gold,
-                                      width: 3,
-                                    ),
-                                    borderRadius: BorderRadius.circular(16),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: AppColors.gold.withOpacity(0.3),
-                                        blurRadius: 15,
-                                        spreadRadius: 2,
-                                        offset: const Offset(0, 4),
-                                      ),
-                                    ],
-                                  ),
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(13),
-                                    child: Image.asset(
-                                      'images/parents/celebration_photo.jpg',
-                                      fit: BoxFit.cover,
-                                      errorBuilder: (context, error, stackTrace) {
-                                        // Fallback if photo not found
-                                        return Container(
-                                          color: AppColors.warmBeige,
-                                          child: Center(
-                                            child: Column(
-                                              mainAxisAlignment: MainAxisAlignment.center,
-                                              children: [
-                                                Icon(
-                                                  Icons.add_photo_alternate_outlined,
-                                                  size: 48,
-                                                  color: AppColors.mediumText.withOpacity(0.5),
-                                                ),
-                                                const SizedBox(height: 12),
-                                                Text(
-                                                  'Add celebration_photo.jpg to\nassets/images/parents/',
-                                                  style: AppTypography.caption.copyWith(
-                                                    color: AppColors.mediumText,
-                                                    fontStyle: FontStyle.italic,
-                                                  ),
-                                                  textAlign: TextAlign.center,
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                    ),
-                                  ),
+                              // Photo Gallery Section
+                              Text(
+                                'Cherished Memories',
+                                style: AppTypography.sectionTitle.copyWith(
+                                  fontSize: size.width < 360 ? 18 : 20,
+                                  color: AppColors.primaryBurgundy,
                                 ),
+                                textAlign: TextAlign.center,
                               ),
+                              
+                              const SizedBox(height: 20),
+                              
+                              // Photo Grid
+                              _buildPhotoGrid(),
                             ],
                           ),
                         ),
