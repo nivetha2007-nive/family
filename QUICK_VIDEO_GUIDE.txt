@@ -1,0 +1,118 @@
+═══════════════════════════════════════════════════════════════
+    📹 QUICK GUIDE: ADD YOUR 11 VIDEOS TO THE APP
+═══════════════════════════════════════════════════════════════
+
+✅ EVERYTHING IS READY! JUST ADD YOUR VIDEOS!
+
+═══════════════════════════════════════════════════════════════
+📂 FOLDER STRUCTURE (Already Created)
+═══════════════════════════════════════════════════════════════
+
+anniversary_gift/
+└── assets/
+    └── videos/
+        ├── (Put Canva video here)
+        └── memories/
+            └── (Put 10 family videos here)
+
+═══════════════════════════════════════════════════════════════
+📹 VIDEO #1: CANVA INTRODUCTION (1 minute)
+═══════════════════════════════════════════════════════════════
+
+File Name:    anniversary_invitation.mp4
+Location:     e:\MOM & DAD\anniversary_gift\assets\videos\
+
+This plays when "Begin Our Story" is clicked!
+
+═══════════════════════════════════════════════════════════════
+📹 VIDEOS #2-11: FAMILY MEMORIES (10 videos)
+═══════════════════════════════════════════════════════════════
+
+Location: e:\MOM & DAD\anniversary_gift\assets\videos\memories\
+
+Rename your 10 videos to:
+
+  video_01.mp4  ← First video
+  video_02.mp4  ← Second video
+  video_03.mp4  ← Third video
+  video_04.mp4  ← Fourth video
+  video_05.mp4  ← Fifth video
+  video_06.mp4  ← Sixth video
+  video_07.mp4  ← Seventh video
+  video_08.mp4  ← Eighth video
+  video_09.mp4  ← Ninth video
+  video_10.mp4  ← Tenth video
+
+═══════════════════════════════════════════════════════════════
+✅ STEP BY STEP
+═══════════════════════════════════════════════════════════════
+
+STEP 1: Rename Videos
+   - Rename your Canva video to: anniversary_invitation.mp4
+   - Rename 10 family videos to: video_01.mp4 through video_10.mp4
+
+STEP 2: Copy Canva Video
+   - Copy anniversary_invitation.mp4 to:
+     e:\MOM & DAD\anniversary_gift\assets\videos\
+
+STEP 3: Copy Family Videos
+   - Copy all 10 videos (video_01.mp4 to video_10.mp4) to:
+     e:\MOM & DAD\anniversary_gift\assets\videos\memories\
+
+STEP 4: Run the App
+   - Open PowerShell
+   - Run: flutter run -d chrome
+   - Test all videos!
+
+═══════════════════════════════════════════════════════════════
+🎯 WHAT WILL HAPPEN
+═══════════════════════════════════════════════════════════════
+
+1. Click "Begin Our Story"
+   ↓
+2. Your Canva video plays (1 minute, full-screen)
+   ↓
+3. Automatically opens home page
+   ↓
+4. Go to "Video Memories"
+   ↓
+5. See all 10 family videos!
+   ↓
+6. Tap any video to watch full-screen
+
+═══════════════════════════════════════════════════════════════
+📝 EXAMPLE FILE PATHS
+═══════════════════════════════════════════════════════════════
+
+e:\MOM & DAD\anniversary_gift\assets\videos\anniversary_invitation.mp4
+e:\MOM & DAD\anniversary_gift\assets\videos\memories\video_01.mp4
+e:\MOM & DAD\anniversary_gift\assets\videos\memories\video_02.mp4
+e:\MOM & DAD\anniversary_gift\assets\videos\memories\video_03.mp4
+e:\MOM & DAD\anniversary_gift\assets\videos\memories\video_04.mp4
+e:\MOM & DAD\anniversary_gift\assets\videos\memories\video_05.mp4
+e:\MOM & DAD\anniversary_gift\assets\videos\memories\video_06.mp4
+e:\MOM & DAD\anniversary_gift\assets\videos\memories\video_07.mp4
+e:\MOM & DAD\anniversary_gift\assets\videos\memories\video_08.mp4
+e:\MOM & DAD\anniversary_gift\assets\videos\memories\video_09.mp4
+e:\MOM & DAD\anniversary_gift\assets\videos\memories\video_10.mp4
+
+═══════════════════════════════════════════════════════════════
+✅ CHECKLIST
+═══════════════════════════════════════════════════════════════
+
+[ ] Renamed Canva video to anniversary_invitation.mp4
+[ ] Renamed 10 videos to video_01.mp4 through video_10.mp4
+[ ] Copied Canva video to assets/videos/
+[ ] Copied 10 videos to assets/videos/memories/
+[ ] All videos are MP4 format
+[ ] Ready to run the app!
+
+═══════════════════════════════════════════════════════════════
+🎊 THAT'S IT!
+═══════════════════════════════════════════════════════════════
+
+Once you add the videos, everything will work automatically!
+
+Need help? Check ADD_VIDEOS_GUIDE.md for detailed instructions!
+
+═══════════════════════════════════════════════════════════════

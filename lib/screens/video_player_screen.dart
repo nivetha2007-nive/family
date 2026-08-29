@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:video_player/video_player.dart';
 import '../theme/app_colors.dart';
-import '../theme/app_text_styles.dart';
+import '../theme/app_typography.dart';
 import '../models/video_memory.dart';
 
-/// Full-screen video player
-/// Note: This is a placeholder. In production, you would integrate
-/// the video_player package or chewie for actual video playback
+/// Full-screen video player for family memory videos
 class VideoPlayerScreen extends StatefulWidget {
   final VideoMemory video;
 
@@ -20,39 +19,62 @@ class VideoPlayerScreen extends StatefulWidget {
 }
 
 class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
+  late VideoPlayerController _controller;
+  bool _isInitialized = false;
+  bool _hasError = false;
   bool _showControls = true;
-  bool _isPlaying = false;
-  double _progress = 0.0;
+  String _errorMessage = '';
 
   @override
   void initState() {
     super.initState();
-    // Set landscape orientation for better video viewing
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.landscapeLeft,
-      DeviceOrientation.landscapeRight,
-      DeviceOrientation.portraitUp,
-    ]);
-    
-    // Hide system UI
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+    _initializeVideo();
+  }
+
+  Future<void> _initializeVideo() async {
+    try {
+      _controller = VideoPlayerController.asset(widget.video.videoPath);
+      
+      await _controller.initialize();
+      
+      if (mounted) {
+        setState(() {
+          _isInitialized = true;
+        });
+        
+        // Auto-play
+        _controller.play();
+        
+        // Listen for updates
+        _controller.addListener(() {
+          if (mounted) {
+            setState(() {});
+          }
+        });
+      }
+    } catch (e) {
+      if (mounted) {
+        setState(() {
+          _hasError = true;
+          _errorMessage = 'Could not load video.\nPlease check the video file.';
+        });
+      }
+    }
   }
 
   @override
   void dispose() {
-    // Restore orientation
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-    ]);
-    
-    // Restore system UI
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+    _controller.dispose();
     super.dispose();
   }
 
   void _togglePlayPause() {
     setState(() {
-      _isPlaying = !_isPlaying;
+      if (_controller.value.isPlaying) {
+        _controller.pause();
+      } else {
+        _controller.play();
+      }
     });
   }
 
@@ -65,111 +87,171 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.black,
+      backgroundColor: Colors.black,
       body: GestureDetector(
         onTap: _toggleControls,
         child: Stack(
           children: [
-            // Video player placeholder
-            Center(
-              child: AspectRatio(
-                aspectRatio: 16 / 9,
+            // Video player
+            if (_isInitialized)
+              Center(
+                child: AspectRatio(
+                  aspectRatio: _controller.value.aspectRatio,
+                  child: VideoPlayer(_controller),
+                ),
+              ),
+
+            // Loading
+            if (!_isInitialized && !_hasError)
+              Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CircularProgressIndicator(
+                      color: AppColors.gold,
+                    ),
+                    const SizedBox(height: 24),
+                    Text(
+                      'Loading video...',
+                      style: AppTypography.bodyMedium.copyWith(
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+            // Error
+            if (_hasError)
+              Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.error_outline,
+                      size: 64,
+                      color: AppColors.gold.withOpacity(0.7),
+                    ),
+                    const SizedBox(height: 24),
+                    Text(
+                      _errorMessage,
+                      style: AppTypography.bodyMedium.copyWith(
+                        color: Colors.white,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 32),
+                    ElevatedButton(
+                      onPressed: () => Navigator.pop(context),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.gold,
+                      ),
+                      child: const Text('Go Back'),
+                    ),
+                  ],
+                ),
+              ),
+
+            // Top bar
+            if (_showControls && _isInitialized)
+              Positioned(
+                top: 0,
+                left: 0,
+                right: 0,
                 child: Container(
-                  color: AppColors.black,
-                  child: Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        Colors.black.withOpacity(0.7),
+                        Colors.transparent,
+                      ],
+                    ),
+                  ),
+                  child: SafeArea(
+                    child: Row(
                       children: [
-                        Icon(
-                          Icons.videocam_outlined,
-                          size: 80,
-                          color: AppColors.white.withOpacity(0.3),
-                        ),
-                        const SizedBox(height: 20),
-                        Text(
-                          'Video Player Placeholder',
-                          style: AppTextStyles.heading3.copyWith(
-                            color: AppColors.white.withOpacity(0.5),
+                        IconButton(
+                          onPressed: () => Navigator.pop(context),
+                          icon: const Icon(
+                            Icons.arrow_back,
+                            color: Colors.white,
                           ),
                         ),
-                        const SizedBox(height: 12),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 48),
+                        Expanded(
                           child: Text(
-                            'To add actual video playback:\n1. Add video_player package to pubspec.yaml\n2. Import and initialize the video player\n3. Replace this placeholder',
-                            style: AppTextStyles.bodySmall.copyWith(
-                              color: AppColors.white.withOpacity(0.4),
-                              height: 1.6,
+                            widget.video.title,
+                            style: AppTypography.cardTitle.copyWith(
+                              color: Colors.white,
                             ),
-                            textAlign: TextAlign.center,
                           ),
-                        ),
-                        const SizedBox(height: 24),
-                        Text(
-                          'Video: ${widget.video.videoPath}',
-                          style: AppTextStyles.caption.copyWith(
-                            color: AppColors.gold.withOpacity(0.6),
-                          ),
-                          textAlign: TextAlign.center,
                         ),
                       ],
                     ),
                   ),
                 ),
               ),
-            ),
 
-            // Top controls bar
-            AnimatedPositioned(
-              duration: const Duration(milliseconds: 300),
-              top: _showControls ? 0 : -100,
-              left: 0,
-              right: 0,
-              child: Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      AppColors.black.withOpacity(0.8),
-                      AppColors.black.withOpacity(0),
-                    ],
+            // Play/pause button
+            if (_showControls && _isInitialized)
+              Center(
+                child: IconButton(
+                  onPressed: _togglePlayPause,
+                  icon: Icon(
+                    _controller.value.isPlaying
+                        ? Icons.pause_circle_filled
+                        : Icons.play_circle_filled,
+                    size: 80,
+                    color: Colors.white.withOpacity(0.9),
                   ),
                 ),
-                child: SafeArea(
-                  child: Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: Row(
+              ),
+
+            // Bottom controls
+            if (_showControls && _isInitialized)
+              Positioned(
+                bottom: 0,
+                left: 0,
+                right: 0,
+                child: Container(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        Colors.transparent,
+                        Colors.black.withOpacity(0.7),
+                      ],
+                    ),
+                  ),
+                  child: SafeArea(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
                       children: [
-                        IconButton(
-                          onPressed: () => Navigator.of(context).pop(),
-                          icon: const Icon(
-                            Icons.arrow_back,
-                            color: AppColors.white,
-                            size: 28,
+                        // Progress bar
+                        VideoProgressIndicator(
+                          _controller,
+                          allowScrubbing: true,
+                          colors: VideoProgressColors(
+                            playedColor: AppColors.gold,
+                            bufferedColor: Colors.white.withOpacity(0.3),
+                            backgroundColor: Colors.white.withOpacity(0.1),
                           ),
                         ),
-                        const SizedBox(width: 16),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                        Padding(
+                          padding: const EdgeInsets.all(16),
+                          child: Row(
                             children: [
                               Text(
-                                widget.video.title,
-                                style: AppTextStyles.heading3.copyWith(
-                                  color: AppColors.white,
-                                  fontSize: 16,
-                                ),
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
+                                _formatDuration(_controller.value.position),
+                                style: const TextStyle(color: Colors.white),
                               ),
-                              if (widget.video.date != null)
-                                Text(
-                                  widget.video.date!,
-                                  style: AppTextStyles.caption.copyWith(
-                                    color: AppColors.lightGold,
-                                  ),
-                                ),
+                              const Spacer(),
+                              Text(
+                                _formatDuration(_controller.value.duration),
+                                style: const TextStyle(color: Colors.white),
+                              ),
                             ],
                           ),
                         ),
@@ -178,195 +260,16 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                   ),
                 ),
               ),
-            ),
-
-            // Center play/pause button
-            if (_showControls && !_isPlaying)
-              Center(
-                child: GestureDetector(
-                  onTap: _togglePlayPause,
-                  child: Container(
-                    width: 80,
-                    height: 80,
-                    decoration: BoxDecoration(
-                      color: AppColors.primaryBurgundy.withOpacity(0.9),
-                      shape: BoxShape.circle,
-                      boxShadow: [
-                        BoxShadow(
-                          color: AppColors.primaryBurgundy.withOpacity(0.5),
-                          blurRadius: 20,
-                          offset: const Offset(0, 8),
-                        ),
-                      ],
-                    ),
-                    child: const Icon(
-                      Icons.play_arrow,
-                      size: 50,
-                      color: AppColors.whiteText,
-                    ),
-                  ),
-                ),
-              ),
-
-            // Bottom controls bar
-            AnimatedPositioned(
-              duration: const Duration(milliseconds: 300),
-              bottom: _showControls ? 0 : -150,
-              left: 0,
-              right: 0,
-              child: Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      AppColors.black.withOpacity(0),
-                      AppColors.black.withOpacity(0.8),
-                    ],
-                  ),
-                ),
-                child: SafeArea(
-                  child: Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        // Progress bar
-                        Row(
-                          children: [
-                            Text(
-                              '0:00',
-                              style: AppTextStyles.caption.copyWith(
-                                color: AppColors.white,
-                                fontSize: 12,
-                              ),
-                            ),
-                            const SizedBox(width: 12),
-                            Expanded(
-                              child: SliderTheme(
-                                data: SliderThemeData(
-                                  trackHeight: 3,
-                                  thumbShape: const RoundSliderThumbShape(
-                                    enabledThumbRadius: 6,
-                                  ),
-                                  overlayShape: const RoundSliderOverlayShape(
-                                    overlayRadius: 14,
-                                  ),
-                                  activeTrackColor: AppColors.gold,
-                                  inactiveTrackColor: AppColors.white.withOpacity(0.3),
-                                  thumbColor: AppColors.gold,
-                                  overlayColor: AppColors.gold.withOpacity(0.3),
-                                ),
-                                child: Slider(
-                                  value: _progress,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      _progress = value;
-                                    });
-                                  },
-                                ),
-                              ),
-                            ),
-                            const SizedBox(width: 12),
-                            Text(
-                              widget.video.duration ?? '0:00',
-                              style: AppTextStyles.caption.copyWith(
-                                color: AppColors.white,
-                                fontSize: 12,
-                              ),
-                            ),
-                          ],
-                        ),
-                        
-                        const SizedBox(height: 16),
-                        
-                        // Control buttons
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            // Rewind
-                            IconButton(
-                              onPressed: () {},
-                              icon: const Icon(
-                                Icons.replay_10,
-                                color: AppColors.white,
-                                size: 32,
-                              ),
-                            ),
-                            
-                            const SizedBox(width: 24),
-                            
-                            // Play/Pause
-                            GestureDetector(
-                              onTap: _togglePlayPause,
-                              child: Container(
-                                width: 56,
-                                height: 56,
-                                decoration: BoxDecoration(
-                                  color: AppColors.gold,
-                                  shape: BoxShape.circle,
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: AppColors.gold.withOpacity(0.4),
-                                      blurRadius: 12,
-                                      offset: const Offset(0, 4),
-                                    ),
-                                  ],
-                                ),
-                                child: Icon(
-                                  _isPlaying ? Icons.pause : Icons.play_arrow,
-                                  size: 32,
-                                  color: AppColors.white,
-                                ),
-                              ),
-                            ),
-                            
-                            const SizedBox(width: 24),
-                            
-                            // Forward
-                            IconButton(
-                              onPressed: () {},
-                              icon: const Icon(
-                                Icons.forward_10,
-                                color: AppColors.white,
-                                size: 32,
-                              ),
-                            ),
-                          ],
-                        ),
-                        
-                        if (widget.video.description != null) ...[
-                          const SizedBox(height: 20),
-                          Container(
-                            width: double.infinity,
-                            padding: const EdgeInsets.all(16),
-                            decoration: BoxDecoration(
-                              color: AppColors.black.withOpacity(0.5),
-                              borderRadius: BorderRadius.circular(12),
-                              border: Border.all(
-                                color: AppColors.gold.withOpacity(0.3),
-                                width: 1,
-                              ),
-                            ),
-                            child: Text(
-                              widget.video.description!,
-                              style: AppTextStyles.bodySmall.copyWith(
-                                color: AppColors.white,
-                                height: 1.5,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        ],
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
           ],
         ),
       ),
     );
+  }
+
+  String _formatDuration(Duration duration) {
+    String twoDigits(int n) => n.toString().padLeft(2, '0');
+    final minutes = twoDigits(duration.inMinutes.remainder(60));
+    final seconds = twoDigits(duration.inSeconds.remainder(60));
+    return '$minutes:$seconds';
   }
 }
