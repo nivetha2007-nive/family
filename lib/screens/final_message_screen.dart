@@ -34,7 +34,6 @@ May your love continue to grow stronger with each passing year.
 
 Here's to many more years of happiness, health, and togetherness.
 
-[REPLACE THIS WITH YOUR ACTUAL FINAL MESSAGE]
 ''';
 
   @override
@@ -263,7 +262,7 @@ Here's to many more years of happiness, health, and togetherness.
                               borderRadius: BorderRadius.circular(16),
                             ),
                             child: Text(
-                              '❤️ Made with love for Mom & Dad ❤️',
+                              '❤️ அம்மா & அப்பாவிற்கு அன்புடன் உருவாக்கப்பட்டது ❤️',
                               style: AppTextStyles.bodyMedium.copyWith(
                                 color: AppColors.primaryBurgundy,
                                 fontWeight: FontWeight.w600,
