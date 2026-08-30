@@ -243,9 +243,92 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                                   letterSpacing: 1.5,
                                 ),
                               ),
-                              const SizedBox(height: 12),
+                              const SizedBox(height: 24),
+                              
+                              // Two circular profile photos side by side
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  // Amma's photo
+                                  Container(
+                                    width: 85,
+                                    height: 85,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      border: Border.all(
+                                        color: AppColors.gold,
+                                        width: 3,
+                                      ),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: AppColors.softShadow,
+                                          blurRadius: 12,
+                                          offset: const Offset(0, 4),
+                                        ),
+                                      ],
+                                    ),
+                                    child: ClipOval(
+                                      child: Image.asset(
+                                        'assets/images/parents/amma_profile.jpg',
+                                        fit: BoxFit.cover,
+                                        errorBuilder: (context, error, stackTrace) {
+                                          return Container(
+                                            color: AppColors.warmBeige,
+                                            child: const Icon(
+                                              Icons.person,
+                                              size: 40,
+                                              color: AppColors.mediumText,
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                  
+                                  const SizedBox(width: 20),
+                                  
+                                  // Daddy's photo
+                                  Container(
+                                    width: 85,
+                                    height: 85,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      border: Border.all(
+                                        color: AppColors.gold,
+                                        width: 3,
+                                      ),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: AppColors.softShadow,
+                                          blurRadius: 12,
+                                          offset: const Offset(0, 4),
+                                        ),
+                                      ],
+                                    ),
+                                    child: ClipOval(
+                                      child: Image.asset(
+                                        'assets/images/parents/daddy_profile.jpg',
+                                        fit: BoxFit.cover,
+                                        errorBuilder: (context, error, stackTrace) {
+                                          return Container(
+                                            color: AppColors.warmBeige,
+                                            child: const Icon(
+                                              Icons.person,
+                                              size: 40,
+                                              color: AppColors.mediumText,
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              
+                              const SizedBox(height: 20),
+                              
                               Text(
-                                'Mom & Dad',
+                                'Amma & Daddy',
                                 style: AppTextStyles.heading1.copyWith(
                                   color: AppColors.primaryBurgundy,
                                   fontSize: 28,
