@@ -44,35 +44,35 @@ class _StoryScreenState extends State<StoryScreen>
       year: '2006-2010',
       description:
           'The early years of marriage. Learning, growing, and creating their first memories as husband and wife. Every day was a new adventure.',
-      imagePath: null,
+      imagePath: 'assets/images/timeline/timeline_early_years.jpg',
     ),
     TimelineItem(
       title: 'Growing Family',
       year: '2010s',
       description:
           'New chapters began. The joy of parenthood, the blessing of family, and the love that multiplies with every milestone.',
-      imagePath: null,
+      imagePath: 'assets/images/timeline/timeline_family.jpg',
     ),
     TimelineItem(
       title: 'Cherished Moments',
       year: '2010-2020',
       description:
           'Vacations, celebrations, quiet evenings, and Sunday mornings. The moments that make a lifetime, the memories that make a family.',
-      imagePath: null,
+      imagePath: 'assets/images/timeline/timeline_moments.jpg',
     ),
     TimelineItem(
       title: 'Together Through Everything',
       year: '2020-2026',
       description:
           'Through challenges and triumphs, through change and growth, their love remained constant. Stronger together.',
-      imagePath: null,
+      imagePath: 'assets/images/timeline/timeline_together.jpg',
     ),
     TimelineItem(
       title: 'Today - 20 Years of Love',
       year: '2026',
       description:
           'Twenty years of partnership, laughter, devotion, and unwavering commitment. A journey that continues, a love that endures.',
-      imagePath: null,
+      imagePath: 'assets/images/timeline/timeline_today.jpg',
     ),
   ];
 

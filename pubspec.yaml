@@ -65,6 +65,7 @@ flutter:
   assets:
     - assets/images/
     - assets/images/parents/
+    - assets/images/timeline/
     - assets/images/invitation/
     - assets/videos/
     - assets/videos/memories/
