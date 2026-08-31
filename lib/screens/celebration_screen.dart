@@ -8,7 +8,7 @@ import '../widgets/decorative_divider.dart';
 import '../widgets/memory_app_wrapper.dart';
 import 'final_message_screen.dart';
 
-/// 20th Anniversary celebration screen
+/// 22nd Anniversary celebration screen
 /// Features celebratory animations, floating hearts, and emotional messages
 class CelebrationScreen extends StatefulWidget {
   const CelebrationScreen({super.key});

@@ -29,7 +29,7 @@ class AnniversaryGiftApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: '20 Years of Love',
+      title: '22 Years of Love',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
       home: const WelcomeScreen(),

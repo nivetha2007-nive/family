@@ -169,7 +169,7 @@ class _HomeScreenState extends State<HomeScreen>
                         onTap: () => _navigateToScreen(const LetterScreen()),
                       ),
                       const SizedBox(height: 24),
-                      // 20th Anniversary Special Card
+                      // 22nd Anniversary Special Card
                       _buildAnniversaryCard(index: 4),
                       const SizedBox(height: 100),
                     ]),
@@ -220,7 +220,7 @@ class _HomeScreenState extends State<HomeScreen>
           FadeTransition(
             opacity: _cardAnimations[0],
             child: Text(
-              '20 Years of Love',
+              '22 Years of Love',
               style: AppTypography.mainTitle.copyWith(
                 fontSize: isSmallScreen ? 30 : 36,
               ),
@@ -489,7 +489,7 @@ class _HomeScreenState extends State<HomeScreen>
 
                   // Title
                   Text(
-                    '20th Anniversary',
+                    '22nd Anniversary',
                     style: AppTypography.sectionTitle.copyWith(
                       color: AppColors.whiteText,
                       fontSize: 26,

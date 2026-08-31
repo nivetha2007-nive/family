@@ -64,10 +64,10 @@ class _StoryScreenState extends State<StoryScreen>
       imagePath: 'assets/images/timeline/timeline_together.jpg',
     ),
     TimelineItem(
-      title: 'Today - 20 Years of Love',
+      title: 'Today - 22 Years of Love',
       year: '2026',
       description:
-          'Twenty years of partnership, laughter, devotion, and unwavering commitment. A journey that continues, a love that endures.',
+          'Twenty-two years of partnership, laughter, devotion, and unwavering commitment. A journey that continues, a love that endures.',
       imagePath: 'assets/images/timeline/timeline_today.jpg',
     ),
   ];

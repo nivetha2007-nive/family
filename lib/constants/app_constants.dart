@@ -1,7 +1,7 @@
 /// App-wide constants for the anniversary app
 class AppConstants {
   // App info
-  static const String appTitle = '20 Years of Love';
+  static const String appTitle = '22 Years of Love';
   
   // Parents' information (will be displayed in invitation screen)
   static const String groomName = 'Sriram D';
@@ -14,7 +14,7 @@ class AppConstants {
   static const String child2Name = 'Yanushka';
   
   // Anniversary details
-  static const int anniversaryYears = 20;
+  static const int anniversaryYears = 22;
   static const String anniversaryYear = '2026';
   
   // Spacing constants

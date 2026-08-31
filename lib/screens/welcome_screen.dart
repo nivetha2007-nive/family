@@ -9,7 +9,7 @@ import '../widgets/memory_app_wrapper.dart';
 import 'video_invitation_screen.dart';
 
 /// Opening screen - First impression of the anniversary app
-/// "20 Years of Love ❤️" with elegant animations
+/// "22 Years of Love ❤️" with elegant animations
 /// Navigates directly to Canva video (NO Flutter invitation page)
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({super.key});

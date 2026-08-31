@@ -4,7 +4,7 @@ class LoveQuotes {
   // Anniversary and time-based quotes
   static const List<String> anniversaryQuotes = [
     "Some love stories only become more beautiful with time.",
-    "Twenty years, countless memories, one beautiful journey.",
+    "Twenty-two years, countless memories, one beautiful journey.",
     "Years pass, memories grow, and love remains.",
     "A beautiful beginning became a beautiful forever.",
     "Two hearts, one journey, twenty beautiful years.",

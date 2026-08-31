@@ -11,7 +11,7 @@ class AppTypography {
   // LARGE DISPLAY TEXTS (Hero sections, major titles)
   // ==========================================================================
   
-  /// Main title - "20 Years of Love"
+  /// Main title - "22 Years of Love"
   static const TextStyle mainTitle = TextStyle(
     fontFamily: primaryFont,
     fontSize: 36,
