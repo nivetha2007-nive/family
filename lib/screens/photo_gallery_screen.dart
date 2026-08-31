@@ -16,84 +16,25 @@ class PhotoGalleryScreen extends StatefulWidget {
   State<PhotoGalleryScreen> createState() => _PhotoGalleryScreenState();
 }
 
-class _PhotoGalleryScreenState extends State<PhotoGalleryScreen>
-    with SingleTickerProviderStateMixin {
-  late TabController _tabController;
+class _PhotoGalleryScreenState extends State<PhotoGalleryScreen> {
   
-  // Placeholder photo data - user will replace with actual photos
-  final Map<PhotoCategory, List<PhotoMemory>> _photosByCategory = {
-    PhotoCategory.wedding: List.generate(
-      6,
-      (index) => PhotoMemory(
-        imagePath: 'assets/images/wedding_${index + 1}.jpg',
-        caption: 'Wedding photo ${index + 1} - Add your caption here',
-        category: PhotoCategory.wedding.displayName,
-        date: '03 Sep 2006',
-      ),
+  // Simple photo gallery - 15 photos with easy numbering
+  final List<PhotoMemory> _allPhotos = List.generate(
+    15,
+    (index) => PhotoMemory(
+      imagePath: 'assets/images/gallery/${index + 1}.jpg',
+      caption: 'Memory ${index + 1}',
+      category: 'Family Memories',
     ),
-    PhotoCategory.family: List.generate(
-      8,
-      (index) => PhotoMemory(
-        imagePath: 'assets/images/family_${index + 1}.jpg',
-        caption: 'Family moment ${index + 1} - Add your caption here',
-        category: PhotoCategory.family.displayName,
-      ),
-    ),
-    PhotoCategory.vacations: List.generate(
-      6,
-      (index) => PhotoMemory(
-        imagePath: 'assets/images/vacation_${index + 1}.jpg',
-        caption: 'Vacation memory ${index + 1} - Add your caption here',
-        category: PhotoCategory.vacations.displayName,
-      ),
-    ),
-    PhotoCategory.celebrations: List.generate(
-      6,
-      (index) => PhotoMemory(
-        imagePath: 'assets/images/celebration_${index + 1}.jpg',
-        caption: 'Celebration ${index + 1} - Add your caption here',
-        category: PhotoCategory.celebrations.displayName,
-      ),
-    ),
-    PhotoCategory.everyday: List.generate(
-      10,
-      (index) => PhotoMemory(
-        imagePath: 'assets/images/everyday_${index + 1}.jpg',
-        caption: 'Everyday moment ${index + 1} - Add your caption here',
-        category: PhotoCategory.everyday.displayName,
-      ),
-    ),
-    PhotoCategory.special: List.generate(
-      8,
-      (index) => PhotoMemory(
-        imagePath: 'assets/images/special_${index + 1}.jpg',
-        caption: 'Special moment ${index + 1} - Add your caption here',
-        category: PhotoCategory.special.displayName,
-      ),
-    ),
-    PhotoCategory.twentyYears: List.generate(
-      4,
-      (index) => PhotoMemory(
-        imagePath: 'assets/images/twenty_years_${index + 1}.jpg',
-        caption: '20 years together - Photo ${index + 1}',
-        category: PhotoCategory.twentyYears.displayName,
-        date: '2026',
-      ),
-    ),
-  };
+  );
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(
-      length: PhotoCategory.values.length,
-      vsync: this,
-    );
   }
 
   @override
   void dispose() {
-    _tabController.dispose();
     super.dispose();
   }
 
@@ -105,97 +46,34 @@ class _PhotoGalleryScreenState extends State<PhotoGalleryScreen>
       child: Scaffold(
         backgroundColor: AppColors.creamBackground,
         body: SafeArea(
-          child: NestedScrollView(
-            headerSliverBuilder: (context, innerBoxIsScrolled) {
-              return [
-                AnniversaryAppBar(
-                  title: 'Photo Memories',
-                  subtitle: 'Cherished Moments',
-                  icon: Icons.photo_library,
-                ),
-                SliverPersistentHeader(
-                  pinned: true,
-                  delegate: _SliverTabBarDelegate(
-                    TabBar(
-                      controller: _tabController,
-                      isScrollable: true,
-                      indicatorColor: AppColors.gold,
-                      indicatorWeight: 3,
-                      labelColor: AppColors.primaryBurgundy,
-                      unselectedLabelColor: AppColors.mediumText,
-                      labelStyle: AppTypography.label.copyWith(
-                        fontWeight: FontWeight.w400,
-                        fontSize: 14,
-                      ),
-                      unselectedLabelStyle: AppTypography.label.copyWith(
-                        fontWeight: FontWeight.w400,
-                        fontSize: 13,
-                      ),
-                      tabs: PhotoCategory.values.map((category) {
-                        return Tab(text: category.displayName);
-                      }).toList(),
-                    ),
+          child: CustomScrollView(
+            slivers: [
+              AnniversaryAppBar(
+                title: 'Photo Memories',
+                subtitle: '15 Cherished Moments',
+                icon: Icons.photo_library,
+              ),
+              SliverPadding(
+                padding: const EdgeInsets.all(16),
+                sliver: SliverGrid(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 12,
+                    mainAxisSpacing: 12,
+                    childAspectRatio: 0.85,
+                  ),
+                  delegate: SliverChildBuilderDelegate(
+                    (context, index) {
+                      return _buildPhotoCard(_allPhotos[index], index, _allPhotos);
+                    },
+                    childCount: _allPhotos.length,
                   ),
                 ),
-              ];
-            },
-            body: TabBarView(
-              controller: _tabController,
-              children: PhotoCategory.values.map((category) {
-                return _buildPhotoGrid(category);
-              }).toList(),
-            ),
+              ),
+            ],
           ),
         ),
       ),
-    );
-  }
-
-  Widget _buildPhotoGrid(PhotoCategory category) {
-    final photos = _photosByCategory[category] ?? [];
-
-    if (photos.isEmpty) {
-      return Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.photo_album_outlined,
-              size: 64,
-              color: AppColors.mediumText.withOpacity(0.5),
-            ),
-            const SizedBox(height: 16),
-            Text(
-              'No photos yet',
-              style: AppTypography.bodyLarge.copyWith(
-                color: AppColors.mediumText,
-              ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              'Add your ${category.displayName.toLowerCase()} photos here',
-              style: AppTypography.bodySmall.copyWith(
-                color: AppColors.lightText,
-                fontStyle: FontStyle.italic,
-              ),
-            ),
-          ],
-        ),
-      );
-    }
-
-    return GridView.builder(
-      padding: const EdgeInsets.all(16),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        crossAxisSpacing: 12,
-        mainAxisSpacing: 12,
-        childAspectRatio: 0.85,
-      ),
-      itemCount: photos.length,
-      itemBuilder: (context, index) {
-        return _buildPhotoCard(photos[index], index, photos);
-      },
     );
   }
 
@@ -220,7 +98,7 @@ class _PhotoGalleryScreenState extends State<PhotoGalleryScreen>
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              // Photo placeholder
+              // Photo image or placeholder
               Expanded(
                 child: Container(
                   decoration: BoxDecoration(
@@ -233,54 +111,45 @@ class _PhotoGalleryScreenState extends State<PhotoGalleryScreen>
                       width: 1,
                     ),
                   ),
-                  child: Stack(
-                    fit: StackFit.expand,
-                    children: [
-                      // Placeholder icon
-                      Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                  child: ClipRRect(
+                    borderRadius: const BorderRadius.vertical(
+                      top: Radius.circular(16),
+                    ),
+                    child: Image.asset(
+                      photo.imagePath,
+                      fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) {
+                        // Show placeholder if image not found
+                        return Stack(
+                          fit: StackFit.expand,
                           children: [
-                            Icon(
-                              Icons.image_outlined,
-                              size: 48,
-                              color: AppColors.mediumText.withOpacity(0.3),
-                            ),
-                            const SizedBox(height: 8),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 12),
-                              child: Text(
-                                'Add photo',
-                                style: AppTypography.caption.copyWith(
-                                  color: AppColors.mediumText.withOpacity(0.5),
-                                ),
-                                textAlign: TextAlign.center,
+                            Center(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.image_outlined,
+                                    size: 48,
+                                    color: AppColors.mediumText.withOpacity(0.3),
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal: 12),
+                                    child: Text(
+                                      'Add photo ${index + 1}.jpg',
+                                      style: AppTypography.caption.copyWith(
+                                        color: AppColors.mediumText.withOpacity(0.5),
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           ],
-                        ),
-                      ),
-                      
-                      // Gradient overlay
-                      Positioned(
-                        bottom: 0,
-                        left: 0,
-                        right: 0,
-                        child: Container(
-                          height: 60,
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
-                              colors: [
-                                Colors.transparent,
-                                AppColors.black.withOpacity(0.3),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
+                        );
+                      },
+                    ),
                   ),
                 ),
               ),
@@ -326,35 +195,5 @@ class _PhotoGalleryScreenState extends State<PhotoGalleryScreen>
         ),
       ),
     );
-  }
-}
-
-/// Custom delegate for the tab bar
-class _SliverTabBarDelegate extends SliverPersistentHeaderDelegate {
-  final TabBar tabBar;
-
-  _SliverTabBarDelegate(this.tabBar);
-
-  @override
-  double get minExtent => tabBar.preferredSize.height;
-
-  @override
-  double get maxExtent => tabBar.preferredSize.height;
-
-  @override
-  Widget build(
-    BuildContext context,
-    double shrinkOffset,
-    bool overlapsContent,
-  ) {
-    return Container(
-      color: AppColors.creamBackground,
-      child: tabBar,
-    );
-  }
-
-  @override
-  bool shouldRebuild(_SliverTabBarDelegate oldDelegate) {
-    return false;
   }
 }

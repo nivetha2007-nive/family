@@ -69,6 +69,7 @@ flutter:
     - assets/images/
     - assets/images/parents/
     - assets/images/timeline/
+    - assets/images/gallery/
     - assets/images/invitation/
     - assets/icons/
     - assets/videos/
