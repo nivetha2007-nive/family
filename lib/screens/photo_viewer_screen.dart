@@ -214,40 +214,47 @@ class _PhotoViewerScreenState extends State<PhotoViewerScreen> {
         child: InteractiveViewer(
           minScale: 0.5,
           maxScale: 4.0,
-          child: Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
-            color: AppColors.warmBeige.withOpacity(0.2),
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.image_outlined,
-                    size: 120,
-                    color: AppColors.white.withOpacity(0.3),
-                  ),
-                  const SizedBox(height: 24),
-                  Text(
-                    'Photo placeholder',
-                    style: AppTextStyles.bodyLarge.copyWith(
-                      color: AppColors.white.withOpacity(0.5),
-                    ),
-                  ),
-                  const SizedBox(height: 12),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 48),
-                    child: Text(
-                      'Replace with your actual photo:\n${photo.imagePath}',
-                      style: AppTextStyles.caption.copyWith(
-                        color: AppColors.white.withOpacity(0.4),
+          child: Image.asset(
+            photo.imagePath,
+            fit: BoxFit.contain,
+            errorBuilder: (context, error, stackTrace) {
+              // Show placeholder only if image fails to load
+              return Container(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height,
+                color: AppColors.warmBeige.withOpacity(0.2),
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.image_outlined,
+                        size: 120,
+                        color: AppColors.white.withOpacity(0.3),
                       ),
-                      textAlign: TextAlign.center,
-                    ),
+                      const SizedBox(height: 24),
+                      Text(
+                        'Photo not found',
+                        style: AppTextStyles.bodyLarge.copyWith(
+                          color: AppColors.white.withOpacity(0.5),
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 48),
+                        child: Text(
+                          'File: ${photo.imagePath}',
+                          style: AppTextStyles.caption.copyWith(
+                            color: AppColors.white.withOpacity(0.4),
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            ),
+                ),
+              );
+            },
           ),
         ),
       ),

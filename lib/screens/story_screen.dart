@@ -26,18 +26,14 @@ class _StoryScreenState extends State<StoryScreen>
       year: '2004',
       description:
           'Every beautiful story has a beginning...\n\nTheir paths would soon cross, and everything would change.',
-      imagePath: null, // Placeholder for pre-marriage photo
-      isPlaceholder: true,
-      placeholderText: 'Photo Coming Soon',
+      imagePath: 'assets/images/timeline/timeline_before_marriage.jpg',
     ),
     TimelineItem(
       title: 'The Day They Said I Do',
       year: '2006',
       description:
           '03 • 09 • 2006\nPariya Kovil, Cuddalore\n\nThe day two hearts became one, surrounded by love, blessings, and the promise of forever.',
-      imagePath: null, // Placeholder for wedding photo
-      isPlaceholder: true,
-      placeholderText: 'Wedding Memories Coming Soon',
+      imagePath: 'assets/images/timeline/timeline_wedding.jpg',
     ),
     TimelineItem(
       title: 'Building Their Life Together',
