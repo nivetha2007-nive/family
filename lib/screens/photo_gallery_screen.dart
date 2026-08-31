@@ -18,9 +18,9 @@ class PhotoGalleryScreen extends StatefulWidget {
 
 class _PhotoGalleryScreenState extends State<PhotoGalleryScreen> {
   
-  // Simple photo gallery - 15 photos with easy numbering
+  // Simple photo gallery - 26 photos with easy numbering
   final List<PhotoMemory> _allPhotos = List.generate(
-    15,
+    26,
     (index) => PhotoMemory(
       imagePath: 'assets/images/gallery/${index + 1}.jpg',
       caption: 'Memory ${index + 1}',
@@ -50,7 +50,7 @@ class _PhotoGalleryScreenState extends State<PhotoGalleryScreen> {
             slivers: [
               AnniversaryAppBar(
                 title: 'Photo Memories',
-                subtitle: '15 Cherished Moments',
+                subtitle: '26 Cherished Moments',
                 icon: Icons.photo_library,
               ),
               SliverPadding(
